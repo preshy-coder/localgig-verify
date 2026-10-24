@@ -3,6 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const PgSession = require('connect-pg-simple')(session);
 const pool = require('./db');
+const authRouter = require('./routes/auth');
 
 const app = express();
 app.use(express.json());
@@ -20,6 +21,8 @@ app.use(session({
     maxAge: 7 * 24 * 60 * 60 * 1000,
   },
 }));
+
+app.use('/api/v1/auth', authRouter);
 
 app.get('/', (req, res) => {
   res.send('LocalGig Verify API is running');
