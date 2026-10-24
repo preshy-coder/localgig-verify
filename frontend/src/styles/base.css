@@ -1,27 +1,22 @@
-/* ---------- Design tokens ----------
-   Colour carries meaning here:
-   green  = confirmed by a client (only used for verified things)
-   yellow = the one action to take on a screen
-   ink    = structure and text
-   red    = something went wrong                                                        */
+/* ---------- Design tokens ---------- */
 :root {
-  --ink: #f4f7df;
-  --muted: #d4ddb0;
-  --ink-panel: rgba(30, 43, 5, 0.9);
-  --button-ink: #263600;
-  --green: #b8d957;
-  --green-deep: #e8f5b5;
-  --green-soft: rgba(192, 224, 91, 0.17);
-  --sun: #d8f58a;
-  --sun-deep: #c7e96e;
-  --sun-soft: rgba(216, 245, 138, 0.2);
-  --red: #ffaaa0;
-  --red-soft: rgba(255, 139, 126, 0.18);
-  --bg: #1d3025;
-  --surface: rgba(202, 224, 202, 0.13);
-  --line: rgba(216, 236, 215, 0.24);
-  --line-strong: rgba(222, 240, 219, 0.52);
-  --focus: #e4ff9c;
+  --ink: #f2f1ec;
+  --muted: #c4d0dc;
+  --ink-panel: rgba(29, 43, 58, 0.94);
+  --button-ink: #263747;
+  --green: #b8cbd9;
+  --green-deep: #dce7ec;
+  --green-soft: rgba(170, 197, 216, 0.18);
+  --sun: #f0a181;
+  --sun-deep: #df8468;
+  --sun-soft: rgba(240, 161, 129, 0.2);
+  --red: #f1a095;
+  --red-soft: rgba(241, 160, 149, 0.18);
+  --bg: #293b4b;
+  --surface: rgba(201, 218, 231, 0.14);
+  --line: rgba(220, 232, 240, 0.25);
+  --line-strong: rgba(228, 237, 242, 0.52);
+  --focus: #f5d9ae;
 
   --font-display: 'Bricolage Grotesque Variable', 'Figtree Variable', system-ui, sans-serif;
   --font-body: 'Figtree Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -35,23 +30,23 @@
 
 :root[data-theme='light'] {
   color-scheme: light;
-  --ink: #26320c;
-  --muted: #56613a;
-  --ink-panel: rgba(49, 65, 12, 0.94);
-  --button-ink: #283500;
-  --green: #63871b;
-  --green-deep: #38520b;
-  --green-soft: rgba(139, 175, 53, 0.16);
-  --sun: #d3ed7c;
-  --sun-deep: #bfdf5b;
-  --sun-soft: rgba(174, 207, 82, 0.19);
-  --red: #a53227;
+  --ink: #263747;
+  --muted: #586d7f;
+  --ink-panel: rgba(231, 237, 241, 0.96);
+  --button-ink: #263747;
+  --green: #66849a;
+  --green-deep: #435f74;
+  --green-soft: rgba(91, 125, 150, 0.14);
+  --sun: #e98f70;
+  --sun-deep: #d7775a;
+  --sun-soft: rgba(217, 119, 90, 0.14);
+  --red: #a7433b;
   --red-soft: rgba(206, 83, 68, 0.12);
-  --bg: #edf2dc;
-  --surface: rgba(255, 255, 248, 0.58);
-  --line: rgba(71, 91, 27, 0.19);
-  --line-strong: rgba(66, 84, 25, 0.44);
-  --focus: #718f25;
+  --bg: #cbd6e0;
+  --surface: rgba(245, 246, 243, 0.64);
+  --line: rgba(50, 72, 91, 0.2);
+  --line-strong: rgba(50, 72, 91, 0.46);
+  --focus: #bd634e;
 }
 
 *,
@@ -72,10 +67,10 @@ html[data-theme='light'] {
 body {
   margin: 0;
   background:
-    radial-gradient(ellipse at 18% 12%, rgba(173, 207, 128, 0.14), transparent 32rem),
-    radial-gradient(ellipse at 82% 28%, rgba(118, 163, 116, 0.13), transparent 34rem),
-    radial-gradient(ellipse at 74% 88%, rgba(146, 184, 132, 0.1), transparent 38rem),
-    linear-gradient(135deg, #17291f 0%, #243a2b 46%, #1b3025 100%);
+    radial-gradient(ellipse at 18% 12%, rgba(193, 212, 228, 0.17), transparent 32rem),
+    radial-gradient(ellipse at 82% 28%, rgba(115, 151, 179, 0.16), transparent 34rem),
+    radial-gradient(ellipse at 74% 88%, rgba(222, 164, 141, 0.09), transparent 38rem),
+    linear-gradient(135deg, #243543 0%, #304658 46%, #263b4d 100%);
   background-attachment: fixed;
   color: var(--ink);
   font-family: var(--font-body);
@@ -86,9 +81,9 @@ body {
 
 html[data-theme='light'] body {
   background:
-    radial-gradient(ellipse at 14% 12%, rgba(198, 221, 132, 0.42), transparent 34rem),
-    radial-gradient(ellipse at 86% 80%, rgba(177, 199, 103, 0.3), transparent 38rem),
-    linear-gradient(135deg, #f5f7e9 0%, #e8eed4 52%, #f2f4e5 100%);
+    radial-gradient(ellipse at 14% 12%, rgba(240, 244, 246, 0.72), transparent 34rem),
+    radial-gradient(ellipse at 86% 80%, rgba(190, 207, 220, 0.5), transparent 38rem),
+    linear-gradient(135deg, #d8e0e7 0%, #c6d2dd 52%, #d4dce3 100%);
   background-attachment: fixed;
 }
 
@@ -213,7 +208,7 @@ button {
   position: sticky;
   top: 0;
   z-index: 30;
-  background: rgba(19, 37, 27, 0.9);
+  background: rgba(30, 46, 61, 0.92);
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(30px) saturate(175%);
   -webkit-backdrop-filter: blur(30px) saturate(175%);
@@ -257,7 +252,7 @@ button {
   color: var(--sun);
   border: 1px solid var(--line-strong);
   border-radius: 50%;
-  background: rgba(202, 224, 202, 0.09);
+  background: rgba(205, 220, 232, 0.1);
   transition: transform 180ms ease, background-color 180ms ease, color 180ms ease;
 }
 
@@ -306,6 +301,13 @@ button {
   gap: 0.5rem;
 }
 
+@media (max-width: 600px) {
+  .topbar-inner { gap: 0.5rem; padding-inline: 0.75rem; }
+  .logo { gap: 0.35rem; font-size: 1rem; }
+  .topnav { gap: 0.55rem; }
+  .topnav .btn { min-height: 40px; padding-inline: 0.8rem; font-size: 0.9rem; }
+}
+
 /* Bottom tab bar (phones only, logged-in freelancers) */
 .bottomnav {
   position: fixed;
@@ -315,7 +317,7 @@ button {
   z-index: 40;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  background: rgba(39, 51, 6, 0.74);
+  background: rgba(30, 46, 61, 0.88);
   border-top: 1px solid var(--line);
   padding-bottom: env(safe-area-inset-bottom);
   backdrop-filter: blur(30px) saturate(175%);

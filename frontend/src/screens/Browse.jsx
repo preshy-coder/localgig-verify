@@ -8,6 +8,7 @@ import { ErrorBanner } from '../components/ErrorBanner.jsx';
 import { EmptyState, LoadingRows } from '../components/Feedback.jsx';
 import { Field } from '../components/Field.jsx';
 import { Icon } from '../components/Icons.jsx';
+import { FreelanceScene } from '../components/FreelanceScene.jsx';
 import { Stamp } from '../components/Stamp.jsx';
 import { COUNTIES } from '../lib/counties.js';
 import { formatRating } from '../lib/format.js';
@@ -28,6 +29,7 @@ function location(f) {
 export default function Browse() {
   useTitle();
   const { isAuthed } = useAuth();
+  const heroRef = useRef(null);
   const [params, setParams] = useSearchParams();
   const q = params.get('q') || '';
   const skill = params.get('skill') || '';
@@ -97,6 +99,25 @@ export default function Browse() {
     setParams({}, { replace: true });
   }
 
+  function moveHero(event) {
+    if (event.pointerType !== 'mouse' || !heroRef.current) return;
+    const bounds = heroRef.current.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+    const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+    heroRef.current.style.setProperty('--hero-tilt-x', `${y * -3}deg`);
+    heroRef.current.style.setProperty('--hero-tilt-y', `${x * 4}deg`);
+    heroRef.current.style.setProperty('--scene-depth-x', `${x * -12}px`);
+    heroRef.current.style.setProperty('--scene-depth-y', `${y * -8}px`);
+  }
+
+  function resetHero() {
+    if (!heroRef.current) return;
+    heroRef.current.style.setProperty('--hero-tilt-x', '0deg');
+    heroRef.current.style.setProperty('--hero-tilt-y', '0deg');
+    heroRef.current.style.setProperty('--scene-depth-x', '0px');
+    heroRef.current.style.setProperty('--scene-depth-y', '0px');
+  }
+
   const popularNames = popular.data ? popular.data.items.map((s) => s.name) : [];
   const chipNames = skill && !popularNames.some((n) => n.toLowerCase() === skill.toLowerCase()) ? [skill, ...popularNames] : popularNames;
 
@@ -106,7 +127,8 @@ export default function Browse() {
         {isAuthed ? (
           <h1>Find a freelancer</h1>
         ) : (
-          <div className="browse-welcome">
+          <div className="browse-welcome" ref={heroRef} onPointerMove={moveHero} onPointerLeave={resetHero}>
+            <FreelanceScene />
             <div className="browse-welcome-copy">
               <p className="browse-kicker">LOCALGIG VERIFY</p>
               <h1>Find trusted local talent.</h1>
