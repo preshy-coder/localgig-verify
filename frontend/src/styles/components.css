@@ -38,13 +38,13 @@
 }
 
 .btn-secondary {
-  background: rgba(232, 244, 186, 0.12);
+  background: rgba(205, 226, 207, 0.1);
   color: var(--ink);
   border-color: var(--line-strong);
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: rgba(232, 244, 186, 0.2);
+  background: rgba(205, 226, 207, 0.18);
 }
 
 :root[data-theme='light'] .btn-secondary {
@@ -117,7 +117,7 @@
   width: 100%;
   min-height: var(--tap);
   padding: 0.65rem 0.85rem;
-  background: rgba(224, 239, 157, 0.11);
+  background: rgba(207, 226, 209, 0.1);
   border: 2px solid var(--line-strong);
   border-radius: var(--radius);
   font-size: 1rem; /* 16px stops iPhones zooming in on focus */
@@ -125,7 +125,7 @@
 }
 
 .input::placeholder {
-  color: #d4ddb0;
+  color: #c1d0c0;
   opacity: 1;
 }
 
@@ -147,9 +147,9 @@ textarea.input {
 select.input {
   appearance: none;
   padding-right: 2.5rem;
-  color: #f6f8e8;
-  background-color: #354306;
-  border-color: rgba(226, 239, 172, 0.65);
+  color: #f2f5ec;
+  background-color: #203629;
+  border-color: rgba(222, 240, 219, 0.62);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230f2e25' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
@@ -157,8 +157,8 @@ select.input {
 }
 
 select.input option {
-  color: #f6f8e8;
-  background-color: #293700;
+  color: #f2f5ec;
+  background-color: #1b2d23;
 }
 
 select.input option:checked {
@@ -190,9 +190,9 @@ select.input option:checked {
 }
 
 .input:focus-visible {
-  outline: 3px solid #e4ff9c;
+  outline: 3px solid var(--focus);
   outline-offset: 1px;
-  border-color: #f0ffbd;
+  border-color: var(--focus);
 }
 
 .input[aria-invalid='true'] {

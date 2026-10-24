@@ -17,10 +17,10 @@
   --sun-soft: rgba(216, 245, 138, 0.2);
   --red: #ffaaa0;
   --red-soft: rgba(255, 139, 126, 0.18);
-  --bg: #374404;
-  --surface: rgba(222, 239, 157, 0.12);
-  --line: rgba(229, 244, 179, 0.24);
-  --line-strong: rgba(235, 248, 199, 0.48);
+  --bg: #1d3025;
+  --surface: rgba(202, 224, 202, 0.13);
+  --line: rgba(216, 236, 215, 0.24);
+  --line-strong: rgba(222, 240, 219, 0.52);
   --focus: #e4ff9c;
 
   --font-display: 'Bricolage Grotesque Variable', 'Figtree Variable', system-ui, sans-serif;
@@ -72,10 +72,10 @@ html[data-theme='light'] {
 body {
   margin: 0;
   background:
-    radial-gradient(ellipse at 18% 12%, rgba(207, 232, 117, 0.22), transparent 32rem),
-    radial-gradient(ellipse at 82% 28%, rgba(162, 191, 69, 0.16), transparent 34rem),
-    radial-gradient(ellipse at 74% 88%, rgba(197, 218, 105, 0.12), transparent 38rem),
-    linear-gradient(135deg, #303c06 0%, #3d4c0a 46%, #344208 100%);
+    radial-gradient(ellipse at 18% 12%, rgba(173, 207, 128, 0.14), transparent 32rem),
+    radial-gradient(ellipse at 82% 28%, rgba(118, 163, 116, 0.13), transparent 34rem),
+    radial-gradient(ellipse at 74% 88%, rgba(146, 184, 132, 0.1), transparent 38rem),
+    linear-gradient(135deg, #17291f 0%, #243a2b 46%, #1b3025 100%);
   background-attachment: fixed;
   color: var(--ink);
   font-family: var(--font-body);
@@ -213,7 +213,7 @@ button {
   position: sticky;
   top: 0;
   z-index: 30;
-  background: rgba(39, 51, 6, 0.68);
+  background: rgba(19, 37, 27, 0.9);
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(30px) saturate(175%);
   -webkit-backdrop-filter: blur(30px) saturate(175%);
@@ -257,7 +257,7 @@ button {
   color: var(--sun);
   border: 1px solid var(--line-strong);
   border-radius: 50%;
-  background: rgba(222, 239, 157, 0.1);
+  background: rgba(202, 224, 202, 0.09);
   transition: transform 180ms ease, background-color 180ms ease, color 180ms ease;
 }
 
