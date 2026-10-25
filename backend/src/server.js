@@ -5,6 +5,7 @@ const PgSession = require('connect-pg-simple')(session);
 const pool = require('./db');
 const authRouter = require('./routes/auth');
 const meRouter = require('./routes/me');
+const freelancersRouter = require('./routes/freelancers');
 
 const app = express();
 app.use(express.json());
@@ -25,6 +26,7 @@ app.use(session({
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/me', meRouter);
+app.use('/api/v1/freelancers', freelancersRouter);
 
 app.get('/', (req, res) => {
   res.send('LocalGig Verify API is running');
