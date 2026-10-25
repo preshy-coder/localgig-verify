@@ -1,22 +1,22 @@
 /* ---------- Design tokens ---------- */
 :root {
-  --ink: #f2f1ec;
-  --muted: #c4d0dc;
-  --ink-panel: rgba(29, 43, 58, 0.94);
-  --button-ink: #263747;
-  --green: #b8cbd9;
-  --green-deep: #dce7ec;
-  --green-soft: rgba(170, 197, 216, 0.18);
-  --sun: #f0a181;
-  --sun-deep: #df8468;
-  --sun-soft: rgba(240, 161, 129, 0.2);
-  --red: #f1a095;
-  --red-soft: rgba(241, 160, 149, 0.18);
-  --bg: #293b4b;
-  --surface: rgba(201, 218, 231, 0.14);
-  --line: rgba(220, 232, 240, 0.25);
-  --line-strong: rgba(228, 237, 242, 0.52);
-  --focus: #f5d9ae;
+  --ink: #f4f5f7;
+  --muted: #b5bdcb;
+  --ink-panel: rgba(18, 21, 29, 0.96);
+  --button-ink: #151821;
+  --green: #74a4ff;
+  --green-deep: #b6ceff;
+  --green-soft: rgba(88, 137, 255, 0.16);
+  --sun: #f0b65f;
+  --sun-deep: #e8a641;
+  --sun-soft: rgba(240, 182, 95, 0.18);
+  --red: #ff968a;
+  --red-soft: rgba(255, 150, 138, 0.16);
+  --bg: #080a0f;
+  --surface: rgba(182, 193, 216, 0.09);
+  --line: rgba(216, 224, 239, 0.15);
+  --line-strong: rgba(224, 231, 242, 0.35);
+  --focus: #f3c675;
 
   --font-display: 'Bricolage Grotesque Variable', 'Figtree Variable', system-ui, sans-serif;
   --font-body: 'Figtree Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -30,23 +30,23 @@
 
 :root[data-theme='light'] {
   color-scheme: light;
-  --ink: #263747;
-  --muted: #586d7f;
-  --ink-panel: rgba(231, 237, 241, 0.96);
-  --button-ink: #263747;
-  --green: #66849a;
-  --green-deep: #435f74;
-  --green-soft: rgba(91, 125, 150, 0.14);
-  --sun: #e98f70;
-  --sun-deep: #d7775a;
-  --sun-soft: rgba(217, 119, 90, 0.14);
+  --ink: #171b24;
+  --muted: #596273;
+  --ink-panel: rgba(250, 250, 252, 0.97);
+  --button-ink: #151821;
+  --green: #416ed0;
+  --green-deep: #294b99;
+  --green-soft: rgba(65, 110, 208, 0.12);
+  --sun: #e3a13c;
+  --sun-deep: #cc8626;
+  --sun-soft: rgba(227, 161, 60, 0.14);
   --red: #a7433b;
   --red-soft: rgba(206, 83, 68, 0.12);
-  --bg: #cbd6e0;
-  --surface: rgba(245, 246, 243, 0.64);
-  --line: rgba(50, 72, 91, 0.2);
-  --line-strong: rgba(50, 72, 91, 0.46);
-  --focus: #bd634e;
+  --bg: #e8eaf0;
+  --surface: rgba(255, 255, 255, 0.68);
+  --line: rgba(32, 40, 57, 0.14);
+  --line-strong: rgba(32, 40, 57, 0.34);
+  --focus: #a76e20;
 }
 
 *,
@@ -67,10 +67,10 @@ html[data-theme='light'] {
 body {
   margin: 0;
   background:
-    radial-gradient(ellipse at 18% 12%, rgba(193, 212, 228, 0.17), transparent 32rem),
-    radial-gradient(ellipse at 82% 28%, rgba(115, 151, 179, 0.16), transparent 34rem),
-    radial-gradient(ellipse at 74% 88%, rgba(222, 164, 141, 0.09), transparent 38rem),
-    linear-gradient(135deg, #243543 0%, #304658 46%, #263b4d 100%);
+    radial-gradient(ellipse at 76% 24%, rgba(37, 70, 167, 0.2), transparent 32rem),
+    radial-gradient(ellipse at 18% 88%, rgba(30, 44, 82, 0.16), transparent 34rem),
+    radial-gradient(ellipse at 62% 74%, rgba(185, 127, 43, 0.045), transparent 36rem),
+    linear-gradient(135deg, #080a0f 0%, #0c1019 52%, #090c13 100%);
   background-attachment: fixed;
   color: var(--ink);
   font-family: var(--font-body);
@@ -81,9 +81,9 @@ body {
 
 html[data-theme='light'] body {
   background:
-    radial-gradient(ellipse at 14% 12%, rgba(240, 244, 246, 0.72), transparent 34rem),
-    radial-gradient(ellipse at 86% 80%, rgba(190, 207, 220, 0.5), transparent 38rem),
-    linear-gradient(135deg, #d8e0e7 0%, #c6d2dd 52%, #d4dce3 100%);
+    radial-gradient(ellipse at 14% 12%, rgba(255, 255, 255, 0.88), transparent 34rem),
+    radial-gradient(ellipse at 86% 80%, rgba(123, 150, 211, 0.14), transparent 38rem),
+    linear-gradient(135deg, #f0f1f4 0%, #e3e6ed 52%, #f0f0ef 100%);
   background-attachment: fixed;
 }
 
@@ -208,7 +208,7 @@ button {
   position: sticky;
   top: 0;
   z-index: 30;
-  background: rgba(30, 46, 61, 0.92);
+  background: rgba(8, 10, 15, 0.9);
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(30px) saturate(175%);
   -webkit-backdrop-filter: blur(30px) saturate(175%);
@@ -252,7 +252,7 @@ button {
   color: var(--sun);
   border: 1px solid var(--line-strong);
   border-radius: 50%;
-  background: rgba(205, 220, 232, 0.1);
+  background: rgba(181, 193, 216, 0.08);
   transition: transform 180ms ease, background-color 180ms ease, color 180ms ease;
 }
 
@@ -317,7 +317,7 @@ button {
   z-index: 40;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  background: rgba(30, 46, 61, 0.88);
+  background: rgba(8, 10, 15, 0.92);
   border-top: 1px solid var(--line);
   padding-bottom: env(safe-area-inset-bottom);
   backdrop-filter: blur(30px) saturate(175%);
