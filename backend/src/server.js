@@ -10,9 +10,14 @@ const reviewRequestsRouter = require('./routes/reviewRequests');
 const reviewLinksRouter = require('./routes/reviewLinks');
 const browseRouter = require('./routes/browse');
 const skillsRouter = require('./routes/skills');
+const helmet = require('helmet');
+const { COUNTIES } = require('./lib/counties');
+const { sendError } = require('./lib/errors');
 
 const app = express();
-app.use(express.json());
+if (process.env.NODE_ENV === 'production') app.set('trust proxy', 1);
+app.use(helmet());
+app.use(express.json({ limit: '100kb' }));
 
 app.use(session({
   store: new PgSession({ pool, createTableIfMissing: true }),
@@ -35,6 +40,25 @@ app.use('/api/v1/review-requests', reviewRequestsRouter);
 app.use('/api/v1/review-links', reviewLinksRouter);
 app.use('/api/v1/freelancers', browseRouter);
 app.use('/api/v1/skills', skillsRouter);
+
+app.get('/api/v1/counties', (req, res) => res.json({ counties: COUNTIES }));
+
+// Unknown API address
+app.use('/api', (req, res) => {
+  sendError(res, 404, 'NOT_FOUND', 'That address does not exist.');
+});
+
+
+app.use((err, req, res, next) => {
+  if (err.type === 'entity.parse.failed') {
+    return sendError(res, 400, 'INVALID_JSON', 'The request body is not valid JSON.');
+  }
+  if (err.type === 'entity.too.large') {
+    return sendError(res, 413, 'TOO_LARGE', 'The request is too big.');
+  }
+  console.error(err);
+  sendError(res, 500, 'SERVER_ERROR', 'Something went wrong on our side. Try again.');
+});
 
 app.get('/', (req, res) => {
   res.send('LocalGig Verify API is running');

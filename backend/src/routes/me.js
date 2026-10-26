@@ -3,6 +3,7 @@ const pool = require('../db');
 const { requireAuth } = require('../middleware/requireAuth');
 const { sendError } = require('../lib/errors');
 const { loadProfile, getStats } = require('../lib/profile');
+const { findCounty } = require('../lib/counties');
 
 const router = express.Router();
 router.use(requireAuth);
@@ -16,12 +17,12 @@ function cleanProfile(body) {
   const fields = {};
   const headline = text(body.headline);
   const bio = text(body.bio);
-  const county = text(body.county);
+  const county = findCounty(text(body.county)) || text(body.county);
   const town = text(body.town);
 
   if (headline.length > 80) fields.headline = 'Headline can be up to 80 characters.';
   if (bio.length > 500) fields.bio = 'Bio can be up to 500 characters.';
-  if (county.length > 40) fields.county = 'County is too long.';
+ if (county && !findCounty(county)) fields.county = 'Choose a county from the list.';
   if (town.length > 40) fields.town = 'Town can be up to 40 characters.';
 
   const skills = [];
