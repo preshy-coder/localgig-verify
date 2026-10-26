@@ -8,6 +8,8 @@ const meRouter = require('./routes/me');
 const freelancersRouter = require('./routes/freelancers');
 const reviewRequestsRouter = require('./routes/reviewRequests');
 const reviewLinksRouter = require('./routes/reviewLinks');
+const browseRouter = require('./routes/browse');
+const skillsRouter = require('./routes/skills');
 
 const app = express();
 app.use(express.json());
@@ -31,6 +33,8 @@ app.use('/api/v1/me', meRouter);
 app.use('/api/v1/freelancers', freelancersRouter);
 app.use('/api/v1/review-requests', reviewRequestsRouter);
 app.use('/api/v1/review-links', reviewLinksRouter);
+app.use('/api/v1/freelancers', browseRouter);
+app.use('/api/v1/skills', skillsRouter);
 
 app.get('/', (req, res) => {
   res.send('LocalGig Verify API is running');
