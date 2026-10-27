@@ -1,7 +1,7 @@
 // The real API client. It follows FRONTEND-DATA-NEEDS.md; when the back end's API.md
 // differs, change the paths and shapes here and nothing else has to move.
 import { ApiError } from './errors.js';
-import { getToken, notifyUnauthenticated } from './session.js';
+import { notifyUnauthenticated } from './session.js';
 
 const BASE = (import.meta.env.VITE_API_URL || '/api/v1').replace(/\/$/, '');
 const TIMEOUT_MS = 20000;
@@ -14,11 +14,8 @@ async function request(path, { method = 'GET', body, query, auth = false, formDa
     });
   }
 
+  // Login is a cookie set by the server. `credentials: 'include'` makes the browser send it back.
   const headers = { Accept: 'application/json' };
-  if (auth) {
-    const token = getToken();
-    if (token) headers.Authorization = `Bearer ${token}`;
-  }
   let payload;
   if (formData) {
     payload = formData; // the browser sets the multipart boundary itself
@@ -31,7 +28,7 @@ async function request(path, { method = 'GET', body, query, auth = false, formDa
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
   let res;
   try {
-    res = await fetch(url, { method, headers, body: payload, signal: controller.signal });
+    res = await fetch(url, { method, headers, body: payload, signal: controller.signal, credentials: 'include' });
   } catch (e) {
     throw new ApiError({ status: 0, code: e?.name === 'AbortError' ? 'TIMEOUT' : 'NETWORK' });
   } finally {
@@ -64,6 +61,7 @@ async function request(path, { method = 'GET', body, query, auth = false, formDa
 // Auth
 export const signUp = (body) => request('/auth/signup', { method: 'POST', body });
 export const logIn = (body) => request('/auth/login', { method: 'POST', body });
+export const logOut = () => request('/auth/logout', { method: 'POST' });
 
 // The logged-in freelancer
 export const getMe = () => request('/me', { auth: true });
@@ -75,8 +73,21 @@ export function uploadPhoto(blob) {
 }
 
 // Browsing
-export const searchFreelancers = (params) => request('/freelancers', { query: params });
-export const listSkills = (params) => request('/skills', { query: params });
+// The back end names a few list fields differently from FRONTEND-DATA-NEEDS.md (see API.md);
+// they are renamed here so no screen has to change.
+export const searchFreelancers = async (params) => {
+  const res = await request('/freelancers', { query: params });
+  return {
+    items: res.freelancers.map((f) => ({ ...f, verifiedReviewCount: f.reviewCount })),
+    page: res.page,
+    pageSize: res.pageSize,
+    total: res.total,
+  };
+};
+export const listSkills = async (params) => {
+  const res = await request('/skills', { query: params });
+  return { items: res.skills };
+};
 export const getPublicProfile = (slug) => request(`/freelancers/${encodeURIComponent(slug)}`);
 export const getReviews = (slug, params) => request(`/freelancers/${encodeURIComponent(slug)}/reviews`, { query: params });
 

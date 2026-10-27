@@ -5,7 +5,7 @@ const DEFAULT_MESSAGES = {
   NETWORK: "Can't reach LocalGig Verify. Check your internet and try again.",
   TIMEOUT: 'This is taking too long. Check your internet and try again.',
   VALIDATION_FAILED: 'Some details need fixing.',
-  INVALID_CREDENTIALS: 'Email or phone number and password do not match.',
+  INVALID_CREDENTIALS: 'Phone number or password is wrong.',
   UNAUTHENTICATED: 'Your session has ended. Log in again to continue.',
   FORBIDDEN: "You don't have permission to do that.",
   NOT_FOUND: "We couldn't find that.",

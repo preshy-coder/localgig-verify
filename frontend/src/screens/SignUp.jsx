@@ -18,7 +18,7 @@ export default function SignUp() {
   const { signup } = useAuth();
   const reduceMotion = useReducedMotion();
   const formRef = useRef(null);
-  const [values, setValues] = useState({ fullName: '', email: '', phone: '', password: '' });
+  const [values, setValues] = useState({ fullName: '', phone: '', password: '' });
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState(null);
   const [busy, setBusy] = useState(false);
@@ -38,14 +38,11 @@ export default function SignUp() {
     setBusy(true);
     try {
       // On success the app moves on by itself (see GuestOnly), so there is nothing else to do here.
-      await signup({ fullName: values.fullName.trim(), email: values.email.trim().toLowerCase(), phone: normalizePhone(values.phone), password: values.password });
+      await signup({ fullName: values.fullName.trim(), phone: normalizePhone(values.phone), password: values.password });
     } catch (err) {
       const apiErr = asApiError(err);
       if (apiErr.fields) {
         setErrors(apiErr.fields);
-        focusFirstInvalid(formRef.current);
-      } else if (apiErr.code === 'EMAIL_TAKEN') {
-        setErrors({ email: apiErr.message });
         focusFirstInvalid(formRef.current);
       } else if (apiErr.code === 'PHONE_TAKEN') {
         setErrors({ phone: apiErr.message });
@@ -80,9 +77,6 @@ export default function SignUp() {
           <ErrorBanner error={apiError} />
           <Field label="Full name" error={errors.fullName}>
             <input name="fullName" value={values.fullName} onChange={set('fullName')} autoComplete="name" placeholder="Your full name" />
-          </Field>
-          <Field label="Email address" error={errors.email}>
-            <input name="email" type="email" inputMode="email" autoComplete="email" placeholder="you@example.com" value={values.email} onChange={set('email')} />
           </Field>
           <Field label="Phone number" error={errors.phone}>
             <input name="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="0712 345 678" value={values.phone} onChange={set('phone')} />

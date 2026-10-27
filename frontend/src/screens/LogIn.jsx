@@ -9,7 +9,7 @@ import { Field } from '../components/Field.jsx';
 import { PasswordField } from '../components/PasswordField.jsx';
 import { LiquidBackdrop } from '../components/LiquidBackdrop.jsx';
 import { focusFirstInvalid } from '../lib/focus.js';
-import { isEmail, validateLogin as validateIdentifierLogin } from '../lib/validate.js';
+import { validateLogin as validateIdentifierLogin } from '../lib/validate.js';
 import { normalizePhone } from '../lib/format.js';
 import { useTitle } from '../lib/useTitle.js';
 import { hasErrors } from '../lib/validate.js';
@@ -19,7 +19,6 @@ export default function LogIn() {
   const { login, sessionEnded } = useAuth();
   const reduceMotion = useReducedMotion();
   const formRef = useRef(null);
-  const [mode, setMode] = useState('email');
   const [values, setValues] = useState({ identifier: '', password: '' });
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState(null);
@@ -40,10 +39,7 @@ export default function LogIn() {
     setBusy(true);
     try {
       // On success the app moves on by itself (see GuestOnly).
-      const credential = isEmail(values.identifier)
-        ? { email: values.identifier.trim().toLowerCase() }
-        : { phone: normalizePhone(values.identifier) };
-      await login({ ...credential, password: values.password });
+      await login({ phone: normalizePhone(values.identifier), password: values.password });
     } catch (err) {
       setApiError(asApiError(err));
       setBusy(false);
@@ -69,21 +65,16 @@ export default function LogIn() {
           <p>Good to have you back.</p>
         </div>
 
-        <div className="login-mode" role="group" aria-label="Choose login method">
-          <button type="button" className={mode === 'email' ? 'selected' : ''} onClick={() => { setMode('email'); setValues((v) => ({ ...v, identifier: '' })); setErrors({}); }}>Email</button>
-          <button type="button" className={mode === 'phone' ? 'selected' : ''} onClick={() => { setMode('phone'); setValues((v) => ({ ...v, identifier: '' })); setErrors({}); }}>Phone</button>
-        </div>
-
         <form ref={formRef} onSubmit={onSubmit} noValidate className="login-form">
           {sessionEnded && !apiError && <InfoBanner>Your session has ended. Log in again to continue.</InfoBanner>}
           <ErrorBanner error={apiError} />
-          <Field label={mode === 'email' ? 'Email address' : 'Phone number'} error={errors.identifier}>
+          <Field label="Phone number" error={errors.identifier}>
             <input
               name="identifier"
-              type={mode === 'email' ? 'email' : 'tel'}
-              inputMode={mode === 'email' ? 'email' : 'tel'}
-              autoComplete={mode === 'email' ? 'email' : 'tel'}
-              placeholder={mode === 'email' ? 'you@example.com' : '0712 345 678'}
+              type="tel"
+              inputMode="tel"
+              autoComplete="tel"
+              placeholder="0712 345 678"
               value={values.identifier}
               onChange={set('identifier')}
             />

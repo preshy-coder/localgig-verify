@@ -7,7 +7,7 @@ import { buildSeed } from './mockData.js';
 import { clearSession, getToken, notifyUnauthenticated } from './session.js';
 import { COUNTIES } from '../lib/counties.js';
 import { normalizePhone, shortName, slugify } from '../lib/format.js';
-import { hasErrors, isEmail, validateProfile, validateRequest, validateReview, validateSignUp } from '../lib/validate.js';
+import { hasErrors, validateProfile, validateRequest, validateReview, validateSignUp } from '../lib/validate.js';
 
 const DB_KEY = 'lgv.mockdb.v1';
 const FLAGS_KEY = 'lgv.mockflags.v1';
@@ -169,7 +169,7 @@ function requestShape(request) {
 }
 
 function toUser(user) {
-  return { id: user.id, fullName: user.fullName, email: user.email || null, phone: user.phone };
+  return { id: user.id, fullName: user.fullName, phone: user.phone };
 }
 
 // ---------- auth ----------
@@ -189,10 +189,6 @@ export function signUp(body) {
       throw validationError({ password: 'That password is too easy to guess. Try a longer one.' });
     }
     const user = { id: nextId(db, 'u'), fullName: body.fullName.trim(), phone, password: body.password };
-    user.email = body.email.trim().toLowerCase();
-    if (db.users.some((existing) => existing.email?.toLowerCase() === user.email)) {
-      throw new ApiError({ status: 409, code: 'EMAIL_TAKEN', message: 'That email already has an account. Log in instead.' });
-    }
     db.users.push(user);
     let slug = slugify(user.fullName);
     while (db.profiles.some((p) => p.slug === slug)) slug += `-${Math.floor(Math.random() * 9)}`;
@@ -216,17 +212,16 @@ export function signUp(body) {
 
 export function logIn(body) {
   return simulate((db) => {
-    const emailLogin = isEmail(body.email || '');
-    const identifier = emailLogin ? body.email.trim().toLowerCase() : normalizePhone(body.phone || '');
+    const identifier = normalizePhone(body.phone || '');
     const entry = loginAttempts.get(identifier);
     if (entry && entry.count >= 5) {
       const waited = Date.now() - entry.firstAt;
       if (waited < 60000) {
         throw new ApiError({ status: 429, code: 'RATE_LIMITED', retryAfterSeconds: Math.ceil((60000 - waited) / 1000) });
       }
-      loginAttempts.delete(phone);
+      loginAttempts.delete(identifier);
     }
-    const user = db.users.find((candidate) => (emailLogin ? candidate.email?.toLowerCase() === identifier : candidate.phone === identifier) && candidate.password === body.password);
+    const user = db.users.find((candidate) => candidate.phone === identifier && candidate.password === body.password);
     if (!user) {
       const current = loginAttempts.get(identifier) || { count: 0, firstAt: Date.now() };
       loginAttempts.set(identifier, { count: current.count + 1, firstAt: current.firstAt });
@@ -235,6 +230,10 @@ export function logIn(body) {
     loginAttempts.delete(identifier);
     return { token: `mock.${user.id}`, user: toUser(user) };
   });
+}
+
+export function logOut() {
+  return simulate(() => ({ ok: true }));
 }
 
 // ---------- the logged-in freelancer ----------
