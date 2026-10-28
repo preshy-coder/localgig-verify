@@ -10,6 +10,7 @@
     "pg": "^8.23.1"
   },
   "scripts": {
+    "start": "node src/server.js",
     "test": "node --test --test-force-exit"
   }
 }
