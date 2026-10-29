@@ -94,6 +94,30 @@ export default function PublicProfile() {
   const p = profile.data;
   useTitle(p?.fullName);
 
+  useEffect(() => {
+    if (!p) return;
+    const image = p.portfolio?.find((item) => item.photoUrl)?.photoUrl || null;
+    const title = `${p.fullName} | LocalGig Verify`;
+    const description = p.headline || 'Verified Kenyan freelancer on LocalGig Verify.';
+    const setMeta = (key, value, attribute = 'property') => {
+      const selector = attribute === 'property' ? `[property="${key}"]` : `[name="${key}"]`;
+      let tag = document.head.querySelector(selector);
+      if (!tag) {
+        tag = document.createElement('meta');
+        tag.setAttribute(attribute, key);
+      }
+      tag.setAttribute('content', value);
+      if (!tag.parentNode) document.head.appendChild(tag);
+    };
+
+    document.title = title;
+    setMeta('og:title', title);
+    setMeta('og:description', description);
+    setMeta('og:image', image || 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1200&q=80');
+    setMeta('twitter:card', 'summary_large_image', 'name');
+    setMeta('og:url', publicProfileUrl(p.slug));
+  }, [p]);
+
   if (profile.status === 'loading') return <ProfileSkeleton />;
 
   if (profile.status === 'error') {
