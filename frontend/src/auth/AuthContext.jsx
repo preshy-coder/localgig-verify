@@ -10,6 +10,8 @@ export function AuthProvider({ children }) {
   const [sessionEnded, setSessionEnded] = useState(false);
 
   const logout = useCallback(() => {
+    // Ask the server to end the cookie session too. If that fails, logging out here still works.
+    Promise.resolve(api.logOut?.()).catch(() => {});
     clearSession();
     setSession(null);
   }, []);
@@ -25,7 +27,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const finish = useCallback((result) => {
-    const next = { token: result.token, user: result.user };
+    const next = { token: result.token || 'cookie', user: result.user };
     writeSession(next);
     setSession(next);
     setSessionEnded(false);

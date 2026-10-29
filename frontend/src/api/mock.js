@@ -189,8 +189,8 @@ export function signUp(body) {
       throw validationError({ password: 'That password is too easy to guess. Try a longer one.' });
     }
     const user = { id: nextId(db, 'u'), fullName: body.fullName.trim(), phone, password: body.password };
-    user.email = body.email.trim().toLowerCase();
-    if (db.users.some((existing) => existing.email?.toLowerCase() === user.email)) {
+    user.email = (body.email || '').trim().toLowerCase();
+    if (user.email && db.users.some((existing) => existing.email?.toLowerCase() === user.email)) {
       throw new ApiError({ status: 409, code: 'EMAIL_TAKEN', message: 'That email already has an account. Log in instead.' });
     }
     db.users.push(user);

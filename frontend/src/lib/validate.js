@@ -20,11 +20,7 @@ export const LIMITS = {
 };
 
 export const PHONE_MESSAGE = 'Enter a Kenyan mobile number, like 0712 345 678.';
-export const EMAIL_MESSAGE = 'Enter a valid email address.';
-
-export function isEmail(value = '') {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
-}
+export const isEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value || '');
 
 export function hasErrors(errors) {
   return Object.keys(errors).length > 0;
@@ -45,11 +41,10 @@ function checkPassword(value) {
   return null;
 }
 
-export function validateSignUp({ fullName, email, phone, password }) {
+export function validateSignUp({ fullName, phone, password }) {
   const e = {};
   const n = checkName(fullName, LIMITS.fullName, 'Enter your full name.');
   if (n) e.fullName = n;
-  if (!isEmail(email)) e.email = EMAIL_MESSAGE;
   if (!normalizePhone(phone)) e.phone = PHONE_MESSAGE;
   const p = checkPassword(password);
   if (p) e.password = p;
@@ -58,7 +53,7 @@ export function validateSignUp({ fullName, email, phone, password }) {
 
 export function validateLogin({ identifier, password }) {
   const e = {};
-  if (!isEmail(identifier) && !normalizePhone(identifier)) e.identifier = 'Enter a valid email address or Kenyan mobile number.';
+  if (!normalizePhone(identifier)) e.identifier = PHONE_MESSAGE;
   if (!password) e.password = 'Enter your password.';
   return e;
 }

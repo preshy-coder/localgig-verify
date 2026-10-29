@@ -1,4 +1,6 @@
-// Keeps the logged-in session (token and basic user info) in the browser's localStorage.
+// Remembers who is logged in, in the browser's localStorage, so the app knows to show the
+// logged-in screens. With the real API the login itself is a cookie that the server sets and the
+// browser keeps; `token` here is only a marker ('cookie'). The fake API stores its own token.
 
 const KEY = 'lgv.session';
 
