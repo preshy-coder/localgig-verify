@@ -15,7 +15,9 @@ const { COUNTIES } = require('./lib/counties');
 const { sendError } = require('./lib/errors');
 
 const app = express();
-if (process.env.NODE_ENV === 'production') app.set('trust proxy', 1);
+// Online, requests pass through proxies. TRUST_PROXY says how many (1 = the host only,
+// 2 = the front end's rewrite plus the host), so rate limits see each visitor's real address.
+if (process.env.NODE_ENV === 'production') app.set('trust proxy', Number(process.env.TRUST_PROXY) || 1);
 app.use(helmet());
 app.use(express.json({ limit: '100kb' }));
 
