@@ -36,6 +36,7 @@ export default function App() {
             </Route>
             <Route element={<MinimalLayout />}>
               <Route path="r/:token" element={<ClientReview />} />
+              <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>
         </ToastProvider>

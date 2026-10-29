@@ -35,7 +35,7 @@ export function whatsappShareUrl(text) {
 }
 
 export function firstName(name = '') {
-  return name.trim().split(/\s+/)[0] || '';
+  return name.trim().split(/\s+/)[0] || ''; 
 }
 
 export function initials(name = '') {
