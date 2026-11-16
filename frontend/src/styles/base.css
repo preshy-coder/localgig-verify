@@ -214,6 +214,22 @@ button {
   -webkit-backdrop-filter: blur(30px) saturate(175%);
 }
 
+:root[data-theme='light'] .topbar {
+  background: rgba(255, 255, 255, 0.82);
+  border-bottom-color: var(--line);
+}
+
+:root[data-theme='light'] .topnav a:not(.btn),
+:root[data-theme='light'] .linkbtn,
+:root[data-theme='light'] .logo {
+  color: var(--ink);
+}
+
+:root[data-theme='light'] .topnav a.active:not(.btn) {
+  color: var(--green-deep);
+  box-shadow: inset 0 -2px 0 var(--green);
+}
+
 .topbar-inner {
   max-width: 64rem;
   margin: 0 auto;
@@ -322,6 +338,19 @@ button {
   padding-bottom: env(safe-area-inset-bottom);
   backdrop-filter: blur(30px) saturate(175%);
   -webkit-backdrop-filter: blur(30px) saturate(175%);
+}
+
+:root[data-theme='light'] .bottomnav {
+  background: rgba(255, 255, 255, 0.9);
+  border-top-color: var(--line);
+}
+
+:root[data-theme='light'] .bottomnav a {
+  color: var(--muted);
+}
+
+:root[data-theme='light'] .bottomnav a.active {
+  color: var(--ink);
 }
 
 .bottomnav a {
